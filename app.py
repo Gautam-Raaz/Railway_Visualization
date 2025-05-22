@@ -83,9 +83,7 @@ with main_tabs[0]:
 
 # Overview of the Railway Visualization
 with main_tabs[1]:
-    sub_pages = ["Trains",
-                 # "Stations"
-                 ]
+    sub_pages = ["Trains", "Stations" ]
     sub_tabs = st.tabs(sub_pages)
 
     with sub_tabs[0]:
@@ -127,157 +125,157 @@ with main_tabs[1]:
             st.subheader("Train Category Data")
             st.table(df)
 
-    # with sub_tabs[1]:
-    #     st.subheader("3D India State Blocks by Station Count")
-    #
-    #     @st.cache_data
-    #     def load_geojson():
-    #         with open("required_data/tab_1/in.json") as f:
-    #             return json.load(f)
-    #
-    #     @st.cache_data
-    #     def load_station_data():
-    #         return pd.read_csv("required_data/tab_1/station.csv")
-    #
-    #     geojson = load_geojson()
-    #
-    #     df = load_station_data()
-    #
-    #     station_counts = df['State'].str.strip().str.title().value_counts().reset_index()
-    #     station_counts.columns = ['State', 'Station_Count']
-    #
-    #     state_corrections = {
-    #         'Andaman And Nicobar Islands': 'Andaman & Nicobar Island',
-    #         'Jammu And Kashmir': 'Jammu and Kashmir',
-    #         'Odisha': 'Orissa'
-    #     }
-    #     station_counts['State'] = station_counts['State'].replace(state_corrections)
-    #
-    #     geo_states = [feature['properties']['name'] for feature in geojson['features']]
-    #     geo_states.sort()
-    #
-    #     st.sidebar.header("Style and Color")
-    #     color_map_name = st.sidebar.selectbox("Color Scheme", ["Set3", "Paired", "Dark2", "Accent", "tab10", "tab20"])
-    #     cmap = plt.get_cmap(color_map_name)
-    #
-    #     state_colors = {}
-    #     for i, state in enumerate(geo_states):
-    #         color = cmap(i % cmap.N)
-    #         rgb = [int(255 * color[0]), int(255 * color[1]), int(255 * color[2])]
-    #         state_colors[state] = rgb
-    #
-    #     station_dict = dict(zip(station_counts['State'], station_counts['Station_Count']))
-    #     for feature in geojson['features']:
-    #         name = feature['properties']['name']
-    #         feature['properties']['Station_Count'] = station_dict.get(name, 0)
-    #         feature['properties']['fill_color'] = state_colors.get(name, [200, 200, 200])
-    #
-    #     st.sidebar.header("Camera Controls")
-    #     zoom = st.sidebar.slider("Zoom", 1, 10, 3, step=1)
-    #     pitch = st.sidebar.slider("Tilt (Pitch)", 0, 85, 20, step=1)
-    #     bearing = st.sidebar.slider("Rotation (Bearing)", 0, 360, 0)
-    #
-    #     elevation_scale = st.sidebar.slider("Elevation Multiplier", 0, 3000, 350, step=50)
-    #
-    #     view_state = pdk.ViewState(
-    #         latitude=22,
-    #         longitude=80,
-    #         zoom=zoom,
-    #         pitch=pitch,
-    #         bearing=bearing
-    #     )
-    #
-    #     layer = pdk.Layer(
-    #         "GeoJsonLayer",
-    #         data=geojson,
-    #         pickable=True,
-    #         stroked=True,
-    #         filled=True,
-    #         extruded=True,
-    #         get_elevation=f"properties.Station_Count * {elevation_scale}",
-    #         get_fill_color="properties.fill_color",
-    #         opacity=0.92
-    #     )
-    #
-    #     deck = pdk.Deck(
-    #         layers=[layer],
-    #         initial_view_state=view_state,
-    #         tooltip={"text": "{name}\nStations: {Station_Count}"},
-    #         map_style="mapbox://styles/mapbox/light-v10"
-    #     )
-    #
-    #     st.pydeck_chart(deck)
-    #
-    #     st.title("Indian Railway Stations Visualization")
-    #
-    #     st.sidebar.header("Filters")
-    #
-    #     zone_options = sorted(df['Zone'].dropna().unique())
-    #     selected_zones = st.sidebar.multiselect("Select Zones", zone_options, default=zone_options)
-    #
-    #     state_options = sorted(df['State'].dropna().unique())
-    #     selected_states = st.sidebar.multiselect("Select States", state_options, default=state_options)
-    #
-    #     division_options = sorted(df['Division'].dropna().unique())
-    #     selected_divisions = st.sidebar.multiselect("Select Divisions", division_options, default=division_options)
-    #
-    #     filtered_df = df[
-    #         (df['Zone'].isin(selected_zones)) &
-    #         (df['State'].isin(selected_states)) &
-    #         (df['Division'].isin(selected_divisions))
-    #     ]
-    #
-    #     st.sidebar.header("Filtered Results")
-    #     st.dataframe(filtered_df, use_container_width=True)
-    #
-    #     col1, col2, col3 = st.columns(3)
-    #     col1.metric("Total Stations", len(df))
-    #     col2.metric("Filtered Stations", len(filtered_df))
-    #     col3.metric("Unique Zones", df['Zone'].nunique())
-    #
-    #     stations_per_zone = filtered_df['Zone'].value_counts().reset_index()
-    #     stations_per_zone.columns = ['Zone', 'Count']
-    #
-    #     fig_zone = px.bar(
-    #         stations_per_zone,
-    #         x='Zone',
-    #         y='Count',
-    #         color='Zone',
-    #         title="Stations per Zone",
-    #         color_discrete_sequence=px.colors.qualitative.Plotly
-    #     )
-    #     st.plotly_chart(fig_zone, use_container_width=True)
-    #
-    #     stations_per_state = filtered_df['State'].value_counts().reset_index()
-    #     stations_per_state.columns = ['State', 'Count']
-    #
-    #     fig_state = px.bar(
-    #         stations_per_state,
-    #         x='State',
-    #         y='Count',
-    #         color='State',
-    #         title="Stations per State",
-    #         color_discrete_sequence=px.colors.qualitative.Set3
-    #     )
-    #     st.plotly_chart(fig_state, use_container_width=True)
-    #
-    #     st.sidebar.header("State-wise Zone Distribution of Stations")
-    #
-    #     state_zone_distribution = filtered_df.groupby(['State', 'Zone']).size().reset_index(name='Station_Count')
-    #     state_zone_distribution = state_zone_distribution.sort_values(by='State')
-    #
-    #     fig_zone_dist = px.bar(
-    #         state_zone_distribution,
-    #         x="State",
-    #         y="Station_Count",
-    #         color="Zone",
-    #         title="Distribution of Zones Across Each State",
-    #         labels={"Station_Count": "No. of Stations"},
-    #         height=600
-    #     )
-    #
-    #     fig_zone_dist.update_layout(barmode='stack', xaxis_tickangle=-45)
-    #     st.plotly_chart(fig_zone_dist, use_container_width=True)
+    with sub_tabs[1]:
+        st.subheader("3D India State Blocks by Station Count")
+
+        @st.cache_data
+        def load_geojson():
+            with open("required_data/tab_1/in.json") as f:
+                return json.load(f)
+
+        @st.cache_data
+        def load_station_data():
+            return pd.read_csv("required_data/tab_1/station.csv")
+
+        geojson = load_geojson()
+
+        df = load_station_data()
+
+        station_counts = df['State'].str.strip().str.title().value_counts().reset_index()
+        station_counts.columns = ['State', 'Station_Count']
+
+        state_corrections = {
+            'Andaman And Nicobar Islands': 'Andaman & Nicobar Island',
+            'Jammu And Kashmir': 'Jammu and Kashmir',
+            'Odisha': 'Orissa'
+        }
+        station_counts['State'] = station_counts['State'].replace(state_corrections)
+
+        geo_states = [feature['properties']['name'] for feature in geojson['features']]
+        geo_states.sort()
+
+        st.sidebar.header("Style and Color")
+        color_map_name = st.sidebar.selectbox("Color Scheme", ["Set3", "Paired", "Dark2", "Accent", "tab10", "tab20"])
+        cmap = plt.get_cmap(color_map_name)
+
+        state_colors = {}
+        for i, state in enumerate(geo_states):
+            color = cmap(i % cmap.N)
+            rgb = [int(255 * color[0]), int(255 * color[1]), int(255 * color[2])]
+            state_colors[state] = rgb
+
+        station_dict = dict(zip(station_counts['State'], station_counts['Station_Count']))
+        for feature in geojson['features']:
+            name = feature['properties']['name']
+            feature['properties']['Station_Count'] = station_dict.get(name, 0)
+            feature['properties']['fill_color'] = state_colors.get(name, [200, 200, 200])
+
+        st.sidebar.header("Camera Controls")
+        zoom = st.sidebar.slider("Zoom", 1, 10, 3, step=1)
+        pitch = st.sidebar.slider("Tilt (Pitch)", 0, 85, 20, step=1)
+        bearing = st.sidebar.slider("Rotation (Bearing)", 0, 360, 0)
+
+        elevation_scale = st.sidebar.slider("Elevation Multiplier", 0, 3000, 350, step=50)
+
+        view_state = pdk.ViewState(
+            latitude=22,
+            longitude=80,
+            zoom=zoom,
+            pitch=pitch,
+            bearing=bearing
+        )
+
+        layer = pdk.Layer(
+            "GeoJsonLayer",
+            data=geojson,
+            pickable=True,
+            stroked=True,
+            filled=True,
+            extruded=True,
+            get_elevation=f"properties.Station_Count * {elevation_scale}",
+            get_fill_color="properties.fill_color",
+            opacity=0.92
+        )
+
+        deck = pdk.Deck(
+            layers=[layer],
+            initial_view_state=view_state,
+            tooltip={"text": "{name}\nStations: {Station_Count}"},
+            map_style="mapbox://styles/mapbox/light-v10"
+        )
+
+        st.pydeck_chart(deck)
+
+        st.title("Indian Railway Stations Visualization")
+
+        st.sidebar.header("Filters")
+
+        zone_options = sorted(df['Zone'].dropna().unique())
+        selected_zones = st.sidebar.multiselect("Select Zones", zone_options, default=zone_options)
+
+        state_options = sorted(df['State'].dropna().unique())
+        selected_states = st.sidebar.multiselect("Select States", state_options, default=state_options)
+
+        division_options = sorted(df['Division'].dropna().unique())
+        selected_divisions = st.sidebar.multiselect("Select Divisions", division_options, default=division_options)
+
+        filtered_df = df[
+            (df['Zone'].isin(selected_zones)) &
+            (df['State'].isin(selected_states)) &
+            (df['Division'].isin(selected_divisions))
+        ]
+
+        st.sidebar.header("Filtered Results")
+        st.dataframe(filtered_df, use_container_width=True)
+
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Total Stations", len(df))
+        col2.metric("Filtered Stations", len(filtered_df))
+        col3.metric("Unique Zones", df['Zone'].nunique())
+
+        stations_per_zone = filtered_df['Zone'].value_counts().reset_index()
+        stations_per_zone.columns = ['Zone', 'Count']
+
+        fig_zone = px.bar(
+            stations_per_zone,
+            x='Zone',
+            y='Count',
+            color='Zone',
+            title="Stations per Zone",
+            color_discrete_sequence=px.colors.qualitative.Plotly
+        )
+        st.plotly_chart(fig_zone, use_container_width=True)
+
+        stations_per_state = filtered_df['State'].value_counts().reset_index()
+        stations_per_state.columns = ['State', 'Count']
+
+        fig_state = px.bar(
+            stations_per_state,
+            x='State',
+            y='Count',
+            color='State',
+            title="Stations per State",
+            color_discrete_sequence=px.colors.qualitative.Set3
+        )
+        st.plotly_chart(fig_state, use_container_width=True)
+
+        st.sidebar.header("State-wise Zone Distribution of Stations")
+
+        state_zone_distribution = filtered_df.groupby(['State', 'Zone']).size().reset_index(name='Station_Count')
+        state_zone_distribution = state_zone_distribution.sort_values(by='State')
+
+        fig_zone_dist = px.bar(
+            state_zone_distribution,
+            x="State",
+            y="Station_Count",
+            color="Zone",
+            title="Distribution of Zones Across Each State",
+            labels={"Station_Count": "No. of Stations"},
+            height=600
+        )
+
+        fig_zone_dist.update_layout(barmode='stack', xaxis_tickangle=-45)
+        st.plotly_chart(fig_zone_dist, use_container_width=True)
 
 # Delay hotspot
 with main_tabs[2]:
