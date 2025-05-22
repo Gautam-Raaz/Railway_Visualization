@@ -4,14 +4,6 @@ An interactive Streamlit-based web application to visualize Indian railway netwo
 
 🌐 **Live Demo:** [Railway Visualization App](https://railway-visualization.streamlit.app/)
 
----
-
-## 📸 Preview
-
-> *Add screenshots in the `images/` folder and update these links.*
-
-![App Screenshot](images/screenshot1.png)  
-![Map View](images/screenshot2.png)
 
 ---
 
